@@ -35,12 +35,16 @@ public class Corrida {
             carro2.atualizarVelocidade();
 
             //Mover carro.
-            carro1.mover();
-            carro2.mover();
+            carro1.mover(distanciaMaxima);
+            carro2.mover(distanciaMaxima);
             
             //Exibir pista.
             exibirPista();
-
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
             //Verificar se tem vencedor.
             if (carro1.getDistancia() >= distanciaMaxima && carro2.getDistancia() >= distanciaMaxima){
                 if (carro1.getDistancia() > carro2.getDistancia()){
@@ -49,7 +53,8 @@ public class Corrida {
                     System.out.println("Carro 2 venceu!");
                 }else if (carro1.getDistancia() == carro2.getDistancia()){
                     System.out.println("Empate!");
-                } break;
+                } 
+                break;
             }else if (carro1.getDistancia() >= distanciaMaxima){
                 System.out.println("Carro 1 venceu!");
                 break;
@@ -57,12 +62,34 @@ public class Corrida {
                 System.out.println("Carro 2 venceu!");
                 break;
             }
-            
         }
     }
 
+    public void desenharTracejo(int distanciaMaxima){
+        String[] linhaTracejo = new String[distanciaMaxima + 1];
+        for(int i = 0; i < linhaTracejo.length; i++){
+            if (i % 6 < 4) {
+                linhaTracejo[i] = "=";
+            }else{
+                linhaTracejo[i] = " ";
+            }
+            System.out.print(linhaTracejo[i]);
+        }
+    }
     //Mostrar pista.
     private void exibirPista(){
+        // Efeito de tela fixa no terminal:
+
+        // São códigos especiais (caracteres não imprimíveis) que, quando enviados ao console,
+        // não são exibidos como texto, mas sim interpretados como comandos.
+
+        // ANSI Escape: \033[H move o cursor para o topo, \033[2J limpa a tela
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        // Gerador de pista proporcional a distancia maxima estabelecida no construtor de Corrida.
+        
+        // Caso distanciaMaxima seja par.
         if (distanciaMaxima % 2 == 0) {
             for(int i = 0; i < (distanciaMaxima / 2); i++){
             System.out.print("- ");
@@ -70,17 +97,21 @@ public class Corrida {
             System.out.println();
             carro1.desenhar(distanciaMaxima + 1);
             System.out.println();
+            desenharTracejo(distanciaMaxima + 1);
+            System.out.println();
             carro2.desenhar(distanciaMaxima + 1);
             System.out.println();
             for(int i = 0; i < (distanciaMaxima / 2); i++){
             System.out.print("- ");
             }
-        }else {
+        }else { // Caso distanciaMaxima seja impar.
             for(int i = 0; i < (distanciaMaxima / 2) + 1; i++){
             System.out.print("- ");
             }
             System.out.println();
             carro1.desenhar(distanciaMaxima + 1);
+            System.out.println();
+            desenharTracejo(distanciaMaxima + 1);
             System.out.println();
             carro2.desenhar(distanciaMaxima + 1);
             System.out.println();
