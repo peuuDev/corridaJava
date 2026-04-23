@@ -14,13 +14,16 @@ public class Carro {
         this.distancia = 0;
         this.velocidade = 0;
     }
-    
+    public void setDistancia(int distancia) {
+        this.distancia = distancia;
+    }
+
     //Método gerar nova velocidade.
     public void atualizarVelocidade() {
         Random r = new Random();
-        velocidade = r.nextInt(4);
+        velocidade = r.nextInt(3); 
     }
-    
+
     //Método que move o carro.
     public void mover(int distanciaMaxima){
         int novaDistancia = distancia + velocidade;
@@ -28,8 +31,8 @@ public class Carro {
 
         verDistancia(distanciaMaxima);
     }
-    
-    //Verificador de distancia maxima
+
+     //Verificador de distancia maxima
     public void verDistancia(int distanciaMaxima){
         if (getDistancia() > distanciaMaxima) {
             setDistancia(distanciaMaxima);
@@ -39,11 +42,6 @@ public class Carro {
     //Retorna a distancia atual.
     public int getDistancia(){
         return this.distancia;  
-    }
-    
-    //Gera um novo valor para distancia.
-    public void setDistancia(int distancia) {
-        this.distancia = distancia;
     }
 
     public String getNome(){
